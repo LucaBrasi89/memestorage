@@ -17,6 +17,13 @@ public class MemeService {
 
         return (List<Meme>) repository.findAll();
     }
+    
+    
+    public void save(Meme m) {
+    	
+    	repository.save(m);
+    	
+    }
 	
 
 }

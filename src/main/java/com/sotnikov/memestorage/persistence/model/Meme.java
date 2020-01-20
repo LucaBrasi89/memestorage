@@ -18,9 +18,19 @@ import javax.persistence.Table;
 @Table(name = "memes")
 public class Meme {
 
+	protected Meme() { } 
 	
-    @Id
+    public Meme(String fileName, String description, Timestamp creationDate, Timestamp modifyingDate) {
+		super();
+		this.fileName = fileName;
+		this.description = description;
+		this.creationDate = creationDate;
+		this.modifyingDate = modifyingDate;
+	}
+
+	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
 	
     @Column(name = "filename")
     String fileName;
@@ -31,8 +41,6 @@ public class Meme {
     @Column(name = "modifyingDate")
 	Timestamp modifyingDate;
 	
-	ArrayList<String> tags;
-
 	public String getFileName() {
 		return fileName;
 	}
@@ -64,14 +72,24 @@ public class Meme {
 	public void setModifyingDate(Timestamp modifyingDate) {
 		this.modifyingDate = modifyingDate;
 	}
+	
+	
+	
 
-	public ArrayList<String> getTags() {
-		return tags;
+	public Long getId() {
+		return id;
 	}
 
-	public void setTags(ArrayList<String> tags) {
-		this.tags = tags;
+	public void setId(Long id) {
+		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return "Meme [fileName=" + fileName + ", description=" + description + ", creationDate=" + creationDate
+				+ ", modifyingDate=" + modifyingDate + "]";
+	}
+
 	
 	
 	

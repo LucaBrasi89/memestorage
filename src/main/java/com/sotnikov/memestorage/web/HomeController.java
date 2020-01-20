@@ -1,6 +1,9 @@
 package com.sotnikov.memestorage.web;
 
+import java.nio.charset.Charset;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +38,27 @@ public class HomeController {
         for (Meme meme : memes) {
 			System.out.println(meme);
 		}
+        
+        return "index";
+    }
+    
+    
+    @RequestMapping("/random")
+    public String createRandMeme(Model model) {
+        model.addAttribute("appName", appName);
+        
+        byte[] array = new byte[12]; // length is bounded by 7
+        new Random().nextBytes(array);
+        String generatedString = new String(array, Charset.forName("UTF-8"));
+        Random rnd = new Random();
+        int ctime = 100000 + rnd.nextInt(900000);
+        int mtime = 100000 + rnd.nextInt(900000);
+        Timestamp ctimeT = new Timestamp(ctime);
+        Timestamp mtimeT = new Timestamp(mtime);
+        
+        Meme m = new Meme(generatedString, "Something", ctimeT, mtimeT);
+        memeService.save(m);
+
         
         return "index";
     }
